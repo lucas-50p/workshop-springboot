@@ -1,8 +1,11 @@
 package com.example.springmongoDB.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -13,6 +16,10 @@ public class User implements Serializable {
 	private String id;
 	private String name;
 	private String email;
+	
+	//Lista é apenas uma interface, arrayLista é  uma implementação possivel dessa lista
+	@DBRef(lazy = true)// garantir que os post só vão ser carregados, especificamente acessar, se não acessar vem só os dados basicos do post 
+	private List<Post> post = new ArrayList<>();
 	
 	public User() {
 		
@@ -48,6 +55,14 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public List<Post> getPost() {
+		return post;
+	}
+
+	public void setPost(List<Post> post) {
+		this.post = post;
+	}
 
 	@Override
 	public int hashCode() {
@@ -79,6 +94,7 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
+
 
 	
 	
